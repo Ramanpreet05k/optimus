@@ -672,3 +672,205 @@ int main(){
     myaccount.deposit(500.50);
     myaccount.checkBalance();
 }
+
+Types of constructor
+
+1. Default Constructor
+A default constructor takes no arguments (no parameters). If you do not write a constructor for your class, the C++ compiler will automatically generate a hidden, empty default constructor for you.
+
+#include <iostream>
+using namespace std;
+
+class Player {
+public:
+    int health;
+    int score;
+
+    // DEFAULT CONSTRUCTOR
+    // Takes no inputs and sets baseline values automatically
+    Player() {
+        health = 100;
+        score = 0;
+        cout << "A new player has spawned with 100 health!" << endl;
+    }
+};
+
+int main() {
+    // The moment this line runs, the Default Constructor is called.
+    Player p1; 
+    
+    return 0;
+}
+
+
+2. Parameterized Constructor
+A parameterized constructor takes arguments (parameters). This allows you to pass in specific data the moment you create the object, allowing you to customize it immediately rather than setting it up later.
+
+#include <iostream>
+using namespace std;
+
+class Car {
+public:
+    string brand;
+    int year;
+
+    // PARAMETERIZED CONSTRUCTOR
+    // Forces the user to provide a brand and a year when creating the car
+    Car(string carBrand, int carYear) {
+        brand = carBrand;
+        year = carYear;
+    }
+    
+    void displayInfo() {
+        cout << "Car: " << brand << " (" << year << ")" << endl;
+    }
+};
+
+int main() {
+    // We pass the data in parentheses right when we create the object
+    Car myCar("Toyota", 2022); 
+    Car dreamCar("Porsche", 2024);
+    
+    myCar.displayInfo();
+    dreamCar.displayInfo();
+
+    return 0;
+}
+
+3. Copy Constructor
+A copy constructor is used to create a brand-new object by copying the data from an already existing object of the same class.
+
+It takes a reference to an object of the same class as its parameter. It is commonly used when you want to duplicate an object without linking them together in memory.
+
+#include <iostream>
+using namespace std;
+
+class Book {
+public:
+    string title;
+    int pages;
+
+    // Parameterized Constructor
+    Book(string t, int p) {
+        title = t;
+        pages = p;
+    }
+
+    // COPY CONSTRUCTOR
+    // Takes a reference (&) to another Book object
+    // We use "const" so we don't accidentally change the original book
+    Book(const Book &originalBook) {
+        title = originalBook.title;
+        pages = originalBook.pages;
+        cout << "Copied the book: " << title << endl;
+    }
+};
+
+int main() {
+    // 1. Create the original book using the Parameterized Constructor
+    Book book1("Harry Potter", 300);
+
+    // 2. Create a new book by passing book1 into it. 
+    // This triggers the Copy Constructor.
+    Book book2 = book1; 
+    
+    // Alternatively, you can write it like this:
+    // Book book2(book1);
+
+    cout << "Book 1 has " << book1.pages << " pages." << endl;
+    cout << "Book 2 has " << book2.pages << " pages." << endl;
+
+    return 0;
+}
+
+
+/*
+3. Copy Constructor
+A copy constructor is used to create a brand-new object by copying the data from an already existing object of the same class.
+
+It takes a reference to an object of the same class as its parameter. It is commonly used when you want to duplicate an object without linking them together in memory.
+*/
+
+#include<iostream>
+using namespace std;
+
+class Book{
+    public:
+    string title;
+    int pages;
+
+
+    Book(string t, int p){
+        title=t;
+        pages=p;
+    }
+
+    Book(const Book &originalBook){
+        title = originalBook.title;
+        pages = originalBook.pages;
+        cout << "Copied the book: " << title << endl;
+    }
+
+};
+
+int main(){
+    Book b1("Harry Potter",300);
+    // This triggers the Copy Constructor.
+    Book b2 = b1;
+
+
+    cout << "Book 1 has " << b1.pages << " pages." << endl;
+    cout << "Book 2 has " << b2.pages << " pages." << endl;
+}
+
+
+Destructor
+
+A destructor is a special member function in C++ that is called automatically the exact moment an object is destroyed (when it goes out of scope or is manually deleted).
+
+The 4 Rules of Destructors
+
+The Name: It must have the exact same name as the class, but preceded by a tilde (~).
+
+No Return Type: It cannot return a value (not even void).
+
+No Parameters: It takes exactly zero arguments.
+
+Only One: Because it takes no arguments, you cannot overload it. A class can only have one destructor.
+
+what is the difference between structure and a class in c++
+In C++, a struct (structure) and a class are practically identical. They can both contain variables, functions, constructors, and they can both use inheritance.
+
+The only technical difference between them comes down to default privacy (access specifiers).
+
+Here is the breakdown of the differences, followed by a clear example.
+
+1. Default Access Specifiers
+If you don't explicitly write public:, private:, or protected: inside them:
+
+Class: Everything defaults to private. The outside world cannot access it.
+
+Struct: Everything defaults to public. The outside world can access it freely.
+
+What is a Friend Function?
+In C++, one of the main rules of Encapsulation is that private and protected data cannot be accessed by anyone outside the class.
+
+A friend function is the one exception to this rule. It is a normal, standalone function that is not a member of the class, but the class explicitly grants it special permission to access its hidden private and protected data.
+
+
+Pure Virtual Function
+A pure virtual function is a virtual function that has no code body at all. Instead of curly braces {}, you simply assign it the value = 0.
+
+Why do we need it?
+It is used when a function is so specific to the Child classes that it makes absolutely no sense for the Parent class to have a default version.
+
+Crucial Rule: Any class that contains a pure virtual function instantly becomes an Abstract Class. You cannot create objects from it. It exists purely as a strict blueprint to force child classes to do the work.
+
+
+What is a Static Data Member?
+Normally, when you create objects from a class, each individual object gets its own private copy of the class variables. If you change a variable in Object A, Object B is completely unaffected.
+
+A static data member is a variable that is shared by all objects of that class. Instead of creating a new copy for every object, the computer allocates memory for this variable exactly once. All objects look at and modify that same exact memory slot.
+
+What is an Enumeration (enum)?
+An Enumeration (commonly known as an enum) is a user-defined data type in C++ used to assign names to integer constants. It allows you to group a set of related constants together under a single type name.
